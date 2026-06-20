@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
 export function useMediaQuery(query: string): boolean {
   const subscribe = useCallback(
@@ -17,6 +17,14 @@ export function useMediaQuery(query: string): boolean {
     [query],
   );
 
-  // Media queries can't be evaluated on the server; default to false there.
-  return useSyncExternalStore(subscribe, getSnapshot, () => false);
+  const matches = useSyncExternalStore(subscribe, getSnapshot, () => false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Defer viewport-dependent values until after hydration so SSR markup
+  // matches the client's first paint (avoids aria-* / conditional render mismatches).
+  return mounted && matches;
 }

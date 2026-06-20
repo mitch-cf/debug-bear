@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, use } from "react";
+import { createContext, use, type ReactNode } from "react";
 import type { IconType } from "react-icons";
 import {
   RxChevronDown,
@@ -52,7 +52,7 @@ export function Sidebar({
   footer,
 }: {
   groups: SideEntry[][];
-  footer: React.ReactNode;
+  footer: ReactNode;
 }) {
   return (
     <aside
@@ -104,28 +104,30 @@ export function Toolbar({
 }) {
   return (
     <div
-      className="flex items-center justify-between gap-2 border-b border-night-200 bg-fur-50 px-3 py-1.5"
+      className="flex items-center justify-between gap-1 border-b border-night-200 bg-fur-50 px-2 py-1 sm:gap-2 sm:px-3 sm:py-1.5"
       aria-hidden
     >
-      <div className="flex min-w-0 items-center gap-1.5 text-[11px] text-night-600 sm:text-xs">
+      <div className="flex min-w-0 flex-1 items-center gap-1 overflow-hidden text-[9px] text-night-600 sm:gap-1.5 sm:text-xs">
         {crumbs.map((crumb, i) => {
           const Icon = crumb.icon;
           return (
-            <span key={i} className="flex shrink-0 items-center gap-1.5">
+            <span key={i} className="flex min-w-0 shrink items-center gap-1 sm:gap-1.5">
               {i > 0 ? (
-                <RxChevronRight className="size-3 text-night-300" />
+                <RxChevronRight className="size-2.5 shrink-0 text-night-300 sm:size-3" />
               ) : null}
               <span
-                className={`flex items-center gap-1 ${
+                className={`flex min-w-0 items-center gap-0.5 sm:gap-1 ${
                   crumb.dropdown
-                    ? "rounded border border-night-200 px-1.5 py-0.5 font-medium"
+                    ? "rounded border border-night-200 px-1 py-0.5 font-medium sm:px-1.5"
                     : ""
                 }`}
               >
-                {Icon ? <Icon className="size-3 text-night-400" /> : null}
-                {crumb.label}
+                {Icon ? <Icon className="size-2.5 shrink-0 text-night-400 sm:size-3" /> : null}
+                {crumb.label ? (
+                  <span className="truncate">{crumb.label}</span>
+                ) : null}
                 {crumb.dropdown ? (
-                  <RxChevronDown className="size-3 text-night-400" />
+                  <RxChevronDown className="size-2.5 shrink-0 text-night-400 sm:size-3" />
                 ) : null}
               </span>
             </span>
@@ -154,16 +156,16 @@ export function Screen({
   sidebar,
   children,
 }: {
-  toolbar: React.ReactNode;
-  sidebar: React.ReactNode;
-  children: React.ReactNode;
+  toolbar: ReactNode;
+  sidebar: ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div className="flex h-full flex-col bg-fur-100">
       {toolbar}
       <div className="flex min-h-0 flex-1">
         {sidebar}
-        <div className="flex min-w-0 flex-1 flex-col gap-2 overflow-hidden p-2 sm:gap-2.5 sm:p-3">
+        <div className="flex min-w-0 flex-1 flex-col gap-1.5 overflow-hidden p-1.5 sm:gap-2.5 sm:p-3">
           {children}
         </div>
       </div>

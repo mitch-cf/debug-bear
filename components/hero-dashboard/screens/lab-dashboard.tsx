@@ -232,12 +232,14 @@ export function LabDashboardScreen() {
           />
         }
       >
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 text-[10px] text-night-600">
-            <span className="text-xs font-semibold text-night-800">Pages</span>
-            <span className="flex items-center gap-1 rounded border border-night-200 px-1.5 py-0.5">
+        <div className="flex min-w-0 items-center justify-between gap-1">
+          <div className="flex min-w-0 items-center gap-1 text-[9px] text-night-600 sm:gap-1.5 sm:text-[10px]">
+            <span className="shrink-0 text-[10px] font-semibold text-night-800 sm:text-xs">
+              Pages
+            </span>
+            <span className="flex shrink-0 items-center gap-0.5 rounded border border-night-200 px-1 py-0.5 sm:gap-1 sm:px-1.5">
               <RxMagnifyingGlass className="size-2.5" />
-              Search
+              <span className="hidden sm:inline">Search</span>
             </span>
             <span className="hidden items-center gap-1 rounded border border-night-200 px-1.5 py-0.5 md:flex">
               No Saved Filter
@@ -248,47 +250,53 @@ export function LabDashboardScreen() {
               Filters
             </span>
           </div>
-          <div className="flex items-center gap-1 text-[10px] text-night-500">
-            <span className="rounded bg-night-100 px-1.5 py-0.5 font-medium text-night-700">
+          <div className="flex shrink-0 items-center gap-1 text-[9px] text-night-500 sm:text-[10px]">
+            <span className="rounded bg-night-100 px-1 py-0.5 font-medium text-night-700 sm:px-1.5">
               Overview
             </span>
-            <span className="px-1.5 py-0.5">Charts</span>
+            <span className="hidden px-1.5 py-0.5 sm:inline">Charts</span>
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col overflow-hidden rounded-lg border border-night-200 bg-fur-50 px-2 py-1">
-          <div
-            className={`grid ${GRID_COLS} items-center gap-1 border-b border-night-200 pb-1 text-[8px] font-semibold uppercase tracking-wide text-night-400`}
-          >
-            <span>Page</span>
-            {CRUX_COLUMNS.map((c) => (
-              <span key={c}>{c}</span>
-            ))}
-          </div>
-          <div className="flex flex-1 flex-col justify-between">
-            {PAGES.map((page) => (
+        <div className="min-h-0 flex-1 overflow-hidden rounded-lg border border-night-200 bg-fur-50">
+          <div className="h-full overflow-x-auto overflow-y-hidden">
+            <div className="flex h-full min-w-[34rem] flex-col px-2 py-1 sm:min-w-0">
               <div
-                key={page.name}
-                className={`grid ${GRID_COLS} items-center gap-1 border-b border-night-100 py-1 last:border-b-0`}
+                className={`grid ${GRID_COLS} items-center gap-1 border-b border-night-200 pb-1 text-[8px] font-semibold uppercase tracking-wide text-night-400`}
               >
-                <div className="flex min-w-0 items-center gap-1.5">
-                  <div className="size-6 shrink-0 overflow-hidden rounded border border-night-200 bg-signal-100">
-                    <div className="h-1.5 bg-night-700" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="truncate text-[10px] font-semibold text-night-800">
-                      {page.name}
-                    </div>
-                    <div className="truncate text-[9px] text-night-500">
-                      {page.url}
-                    </div>
-                  </div>
-                </div>
-                {page.cells.map((cell, i) => (
-                  <CruxCell key={i} {...cell} />
+                <span>Page</span>
+                {CRUX_COLUMNS.map((c) => (
+                  <span key={c} className="truncate">
+                    {c}
+                  </span>
                 ))}
               </div>
-            ))}
+              <div className="flex flex-1 flex-col justify-between">
+                {PAGES.map((page) => (
+                  <div
+                    key={page.name}
+                    className={`grid ${GRID_COLS} items-center gap-1 border-b border-night-100 py-1 last:border-b-0`}
+                  >
+                    <div className="flex min-w-0 items-center gap-1.5">
+                      <div className="size-5 shrink-0 overflow-hidden rounded border border-night-200 bg-signal-100 sm:size-6">
+                        <div className="h-1.5 bg-night-700" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="truncate text-[9px] font-semibold text-night-800 sm:text-[10px]">
+                          {page.name}
+                        </div>
+                        <div className="truncate text-[8px] text-night-500 sm:text-[9px]">
+                          {page.url}
+                        </div>
+                      </div>
+                    </div>
+                    {page.cells.map((cell, i) => (
+                      <CruxCell key={i} {...cell} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </Screen>

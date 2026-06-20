@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import type { IconType } from "react-icons";
@@ -54,7 +54,7 @@ type Props = {
   buttons: ButtonConfig[];
 };
 
-export type SiteNavbarProps = React.ComponentPropsWithoutRef<"section"> &
+export type SiteNavbarProps = ComponentPropsWithoutRef<"section"> &
   Partial<Props>;
 
 const navbarClasses =

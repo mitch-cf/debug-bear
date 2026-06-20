@@ -230,10 +230,10 @@ function SpeedMetricCard({
   return (
     <div
       ref={rootRef}
-      className="rounded-lg border border-night-200 bg-fur-50 p-2 sm:p-3"
+      className="rounded-lg border border-night-200 bg-fur-50 p-1.5 sm:p-3"
     >
       <div className="flex items-baseline justify-between gap-1">
-        <span className="text-[10px] font-medium leading-tight text-night-600 sm:text-xs">
+        <span className="line-clamp-2 text-[9px] font-medium leading-tight text-night-600 sm:line-clamp-none sm:text-xs">
           {label}
         </span>
         {delta ? (
@@ -248,14 +248,14 @@ function SpeedMetricCard({
       </div>
       <div
         ref={valueRef}
-        className="mt-0.5 text-base font-bold tabular-nums text-night-900 sm:text-xl"
+        className="mt-0.5 text-sm font-bold tabular-nums text-night-900 sm:text-xl"
       >
         {value}
       </div>
       <svg
         ref={chartRef}
         viewBox="0 0 100 36"
-        className="mt-1 h-6 w-full sm:h-8"
+        className="mt-1 h-5 w-full sm:h-8"
         preserveAspectRatio="none"
         aria-hidden
       >
@@ -319,8 +319,8 @@ export function PageSpeedScreen() {
         <Toolbar
           crumbs={[
             { icon: RxHome, label: "" },
-            { label: "Homepage UK (Desktop)", dropdown: true },
-            { label: "12 Jun 2026, 07:40", dropdown: true },
+            { label: "Homepage", dropdown: true },
+            { label: "12 Jun", dropdown: true },
           ]}
           period="Last month"
         />
@@ -348,8 +348,8 @@ export function PageSpeedScreen() {
         />
       }
     >
-      <div className="rounded-lg border border-night-200 bg-fur-50 p-2 sm:p-3">
-        <div className="flex items-center gap-3">
+      <div className="rounded-lg border border-night-200 bg-fur-50 p-1.5 sm:p-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div
             className="hidden size-10 shrink-0 overflow-hidden rounded-md border border-night-200 bg-gradient-to-br from-signal-100 to-signal-200 sm:block sm:size-12"
             aria-hidden
@@ -358,13 +358,13 @@ export function PageSpeedScreen() {
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1">
-              <span className="text-xs font-bold text-night-900 sm:text-sm">
+              <span className="text-[11px] font-bold text-night-900 sm:text-sm">
                 Page Speed Report
               </span>
-              <RxGear className="size-3 text-night-400" />
+              <RxGear className="size-3 shrink-0 text-night-400" />
             </div>
-            <div className="flex items-center gap-1 truncate text-[11px] text-signal-600 sm:text-xs">
-              www.debugbear.com/
+            <div className="flex items-center gap-1 truncate text-[10px] text-signal-600 sm:text-xs">
+              debugbear.com/
               <RxExternalLink className="size-2.5 shrink-0" />
             </div>
             <div className="mt-1 hidden flex-wrap gap-x-2 gap-y-0.5 text-[10px] text-night-500 lg:flex">
@@ -379,14 +379,14 @@ export function PageSpeedScreen() {
               })}
             </div>
           </div>
-          <div className="flex shrink-0 gap-2 sm:gap-3">
+          <div className="flex shrink-0 gap-1.5 sm:gap-3">
             <ScoreRing label="CrUX" score={95} />
             <ScoreRing label="Lab" score={92} />
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 sm:gap-2">
         {speedMetrics.map((metric) => (
           <SpeedMetricCard key={metric.label} {...metric} />
         ))}

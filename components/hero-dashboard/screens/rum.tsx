@@ -47,17 +47,18 @@ const rumSidebar: SideEntry[][] = [
 
 type WebVital = {
   label: string;
+  shortLabel: string;
   value: string;
   rating: Rating;
 };
 
 const webVitals: WebVital[] = [
-  { label: "Largest Contentful Paint", value: "1.70 s", rating: "good" },
-  { label: "Cumulative Layout Shift", value: "0.11", rating: "ni" },
-  { label: "Interaction to Next Paint", value: "184 ms", rating: "good" },
+  { label: "Largest Contentful Paint", shortLabel: "LCP", value: "1.70 s", rating: "good" },
+  { label: "Cumulative Layout Shift", shortLabel: "CLS", value: "0.11", rating: "ni" },
+  { label: "Interaction to Next Paint", shortLabel: "INP", value: "184 ms", rating: "good" },
 ];
 
-function WebVitalCard({ label, value, rating }: WebVital) {
+function WebVitalCard({ label, shortLabel, value, rating }: WebVital) {
   const markerLeft =
     rating === "good" ? "20%" : rating === "ni" ? "58%" : "85%";
   const isActive = useScreenActive();
@@ -92,15 +93,18 @@ function WebVitalCard({ label, value, rating }: WebVital) {
   return (
     <div
       ref={rootRef}
-      className="rounded-lg border border-night-200 bg-fur-50 p-2 sm:p-3"
+      className="rounded-lg border border-night-200 bg-fur-50 p-1.5 sm:p-3"
     >
-      <div className="flex items-center justify-between gap-1 text-[10px] text-night-600 sm:text-xs">
-        <span className="truncate font-medium">{label}</span>
+      <div className="flex items-center justify-between gap-1 text-[9px] text-night-600 sm:text-xs">
+        <span className="truncate font-medium">
+          <span className="sm:hidden">{shortLabel}</span>
+          <span className="hidden sm:inline">{label}</span>
+        </span>
         <span className="shrink-0 text-night-400">P75</span>
       </div>
       <div
         ref={valueRef}
-        className="mt-1 text-xl font-bold tabular-nums text-night-900 sm:text-3xl"
+        className="mt-1 text-lg font-bold tabular-nums text-night-900 sm:text-3xl"
       >
         {value}
       </div>
@@ -164,37 +168,37 @@ export function RumScreen() {
         />
       }
     >
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1 text-[10px] text-night-600">
-          <span className="flex items-center gap-1 rounded bg-night-100 px-1.5 py-0.5 font-medium text-night-700">
+      <div className="flex min-w-0 items-center justify-between gap-1">
+        <div className="flex min-w-0 items-center gap-0.5 text-[9px] text-night-600 sm:gap-1 sm:text-[10px]">
+          <span className="flex shrink-0 items-center gap-0.5 rounded bg-night-100 px-1 py-0.5 font-medium text-night-700 sm:gap-1 sm:px-1.5">
             <RxMobile className="size-2.5" />
-            Mobile
+            <span className="hidden sm:inline">Mobile</span>
           </span>
-          <span className="flex items-center gap-1 px-1.5 py-0.5 text-night-500">
+          <span className="hidden shrink-0 items-center gap-0.5 px-1 py-0.5 text-night-500 sm:flex sm:gap-1 sm:px-1.5">
             <RxDesktop className="size-2.5" />
             Desktop
           </span>
-          <span className="px-1.5 py-0.5 text-night-500">All</span>
+          <span className="hidden px-1.5 py-0.5 text-night-500 sm:inline">All</span>
           <span className="hidden items-center gap-1 rounded border border-night-200 px-1.5 py-0.5 md:flex">
             No Saved Filter
             <RxChevronDown className="size-2.5" />
           </span>
         </div>
-        <div className="flex items-center gap-2 text-[10px] text-night-500">
+        <div className="flex shrink-0 items-center gap-1.5 text-[9px] text-night-500 sm:gap-2 sm:text-[10px]">
           <span className="font-medium text-night-700">Overview</span>
-          <span>Timeline</span>
+          <span className="hidden sm:inline">Timeline</span>
           <span className="hidden md:inline">Page Views</span>
           <span className="hidden md:inline">Table</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
         {webVitals.map((vital) => (
           <WebVitalCard key={vital.label} {...vital} />
         ))}
       </div>
 
-      <div className="grid flex-1 grid-cols-2 gap-2">
+      <div className="hidden min-h-0 flex-1 grid-cols-2 gap-2 sm:grid">
         <div className="flex flex-col rounded-lg border border-night-200 bg-fur-50 p-2 sm:p-3">
           <span className="text-[11px] font-semibold text-night-800 sm:text-xs">
             Core Web Vitals Trend
@@ -243,6 +247,34 @@ export function RumScreen() {
             ))}
           </div>
         </div>
+      </div>
+
+      <div className="flex min-h-0 flex-1 flex-col rounded-lg border border-night-200 bg-fur-50 p-1.5 sm:hidden">
+        <span className="text-[10px] font-semibold text-night-800">Core Web Vitals Trend</span>
+        <svg
+          viewBox="0 0 100 40"
+          preserveAspectRatio="none"
+          className="mt-1 min-h-[3.5rem] w-full flex-1"
+          aria-hidden
+        >
+          <path
+            d="M0 30 L16 28 L33 31 L50 26 L66 29 L83 24 L100 27 L100 40 L0 40 Z"
+            className="fill-bear-100"
+          />
+          <path
+            d="M0 22 L16 18 L33 24 L50 16 L66 20 L83 14 L100 18 L100 40 L0 40 Z"
+            className="fill-zap-100"
+          />
+          <path
+            d="M0 22 L16 18 L33 24 L50 16 L66 20 L83 14 L100 18"
+            fill="none"
+            className="stroke-zap-500"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
       </div>
     </Screen>
   );

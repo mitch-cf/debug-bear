@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ComponentPropsWithoutRef } from "react";
 import {
   Button,
   buttonMobileFullWidthClass,
@@ -22,7 +23,7 @@ type Props = {
   characterImage: ImageProps;
 };
 
-export type HeroHeadingProps = React.ComponentPropsWithoutRef<"section"> &
+export type HeroHeadingProps = ComponentPropsWithoutRef<"section"> &
   Partial<Props>;
 
 export const HeroHeading = (props: HeroHeadingProps) => {
@@ -32,27 +33,32 @@ export const HeroHeading = (props: HeroHeadingProps) => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-night-900 px-4 pb-14 pt-12 text-fur-50 sm:px-[5%] sm:pb-16 sm:pt-14 md:pb-20 md:pt-20 lg:pt-24">
-      <div className="absolute inset-0 bg-night-900" aria-hidden />
-      <Image
-        src={backgroundImage.src}
-        alt={backgroundImage.alt ?? ""}
-        fill
-        priority
-        fetchPriority="high"
-        placeholder="blur"
-        blurDataURL={HERO_BACKGROUND_BLUR}
-        sizes="100vw"
-        quality={70}
-        className="object-cover object-center"
-        aria-hidden={!backgroundImage.alt}
-      />
+    <section className="relative isolate overflow-hidden bg-night-900 px-4 pb-14 pt-12 text-fur-50 sm:px-[5%] sm:pb-16 sm:pt-14 md:pb-20 md:pt-20 lg:pt-24">
       <div
-        className="absolute inset-0 bg-gradient-to-b from-night-900/20 via-night-900/45 to-night-900/30"
+        className="absolute inset-0 h-full min-h-full bg-night-900"
+        aria-hidden
+      />
+      <div className="absolute inset-0 h-full min-h-full">
+        <Image
+          src={backgroundImage.src}
+          alt={backgroundImage.alt ?? ""}
+          fill
+          priority
+          fetchPriority="high"
+          placeholder="blur"
+          blurDataURL={HERO_BACKGROUND_BLUR}
+          sizes="100vw"
+          quality={75}
+          className="size-full min-h-full object-cover object-[center_35%]"
+          aria-hidden={!backgroundImage.alt}
+        />
+      </div>
+      <div
+        className="absolute inset-0 h-full min-h-full bg-gradient-to-b from-night-900/10 via-transparent to-night-900/55"
         aria-hidden
       />
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_30%,#02164599,transparent_70%)] lg:bg-[radial-gradient(ellipse_55%_55%_at_28%_32%,#021645b3,transparent_70%)]"
+        className="absolute inset-0 h-full min-h-full bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,#02164566,transparent_65%)] lg:bg-[radial-gradient(ellipse_60%_45%_at_30%_25%,#02164580,transparent_65%)]"
         aria-hidden
       />
       <div className="container relative z-10">
@@ -79,7 +85,7 @@ export const HeroHeading = (props: HeroHeadingProps) => {
           </div>
 
           <div className="relative mt-10 sm:mt-14 md:mt-16">
-            <div className="relative h-[21rem] sm:h-[30rem] lg:h-[35rem]">
+            <div className="relative h-[24rem] sm:h-[30rem] lg:h-[35rem]">
               <div className="enter-fade-scale-up enter-delay-5 absolute inset-0">
                 <HeroDashboardPreview />
               </div>
@@ -105,7 +111,7 @@ export const heroHeadingDefaults: Props = {
     { title: "View pricing", variant: "secondary-alt" },
   ],
   backgroundImage: {
-    src: "/hero-upscale.png",
+    src: "/hero-sparse-upscale.webp",
     alt: "",
   },
   characterImage: {
