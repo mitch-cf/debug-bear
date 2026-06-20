@@ -56,9 +56,11 @@ function TestimonialTooltipContent({
 function TestimonialModal({
   testimonial,
   onClose,
+  caption,
 }: {
   testimonial: Testimonial;
   onClose: () => void;
+  caption: string;
 }) {
   return (
     <motion.div
@@ -138,9 +140,7 @@ function TestimonialModal({
 
       <div className="relative z-10 flex h-16 shrink-0 items-center justify-center border-t border-night-800 bg-night-950 px-6">
         <p className="text-center text-[11px] font-medium text-night-200">
-          Trusted by{" "}
-          <span className="font-bold text-fur-50">2,000+</span> engineering
-          teams
+          {caption}
         </p>
       </div>
     </motion.div>
@@ -150,7 +150,7 @@ function TestimonialModal({
 export function HeroSocialProof({
   testimonials = defaultTestimonials,
   rating = "4.9/5",
-  caption = "Trusted by 2,000+ engineering teams",
+  caption = "Trustpilot Reviews",
 }: HeroSocialProofProps) {
   const [activeTestimonial, setActiveTestimonial] =
     useState<Testimonial | null>(null);
@@ -241,6 +241,7 @@ export function HeroSocialProof({
                 <TestimonialModal
                   testimonial={activeTestimonial}
                   onClose={() => setActiveTestimonial(null)}
+                  caption={caption}
                 />
               ) : null}
             </AnimatePresence>,
