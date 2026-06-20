@@ -25,7 +25,7 @@ import {
 } from "react-icons/rx";
 import { useReducedMotionGsap } from "@/hooks/use-reduced-motion-gsap";
 import { animateCountUp } from "../metrics";
-import { Screen, Sidebar, Toggle, Toolbar, useScreenActive } from "../chrome";
+import { Screen, Sidebar, Toggle, Toolbar, useScreenActive, useShouldAnimateEntrance } from "../chrome";
 import type { SideEntry } from "../chrome";
 
 const pageDetailItems: SideEntry[] = [
@@ -122,6 +122,7 @@ const filmstripFrames = [
 
 function ScoreRing({ label, score }: { label: string; score: number }) {
   const isActive = useScreenActive();
+  const shouldAnimate = useShouldAnimateEntrance();
   const rootRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
   const valueRef = useRef<HTMLSpanElement>(null);
@@ -138,8 +139,8 @@ function ScoreRing({ label, score }: { label: string; score: number }) {
       animateCountUp(valueRef.current, `${score}%`, { duration: 1.2 });
     },
     {
-      active: isActive,
-      dependencies: [isActive, score, circumference, offset],
+      active: isActive && shouldAnimate,
+      dependencies: [isActive, shouldAnimate, score, circumference, offset],
       scope: rootRef,
       revertOnUpdate: true,
     },
@@ -193,6 +194,7 @@ function SpeedMetricCard({
 }: SpeedMetric) {
   const areaPath = `${line} L100 36 L0 36 Z`;
   const isActive = useScreenActive();
+  const shouldAnimate = useShouldAnimateEntrance();
   const rootRef = useRef<HTMLDivElement>(null);
   const valueRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<SVGSVGElement>(null);
@@ -218,8 +220,8 @@ function SpeedMetricCard({
         );
     },
     {
-      active: isActive,
-      dependencies: [isActive, value],
+      active: isActive && shouldAnimate,
+      dependencies: [isActive, shouldAnimate, value],
       scope: rootRef,
       revertOnUpdate: true,
     },

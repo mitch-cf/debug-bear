@@ -23,6 +23,9 @@ export type ButtonConfig = Pick<
 > &
   Partial<ButtonProps>;
 
+/** Stack full-width on mobile; auto width from sm breakpoint up. */
+export const buttonMobileFullWidthClass = "w-full justify-center sm:w-auto";
+
 // Image treatment for `link-alt` lives in the `[&_img]` selectors so the icon
 // JSX stays variant-agnostic and there's a single source of truth per variant.
 const variantClasses: Record<string, string> = {

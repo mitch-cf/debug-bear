@@ -1,24 +1,13 @@
-import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Button, type ButtonConfig } from "@/components/ui/button";
+import {
+  Button,
+  buttonMobileFullWidthClass,
+  type ButtonConfig,
+} from "@/components/ui/button";
 import { HeroCharacter } from "@/components/hero-character";
-import { HeroHeadingStars } from "@/components/hero-heading-stars";
+import { HeroDashboardPreview } from "@/components/hero-dashboard";
 import { HeroSocialProof } from "@/components/hero-social-proof";
-
-const HeroDashboardPreview = dynamic(
-  () =>
-    import("@/components/hero-dashboard").then(
-      (mod) => mod.HeroDashboardPreview,
-    ),
-  {
-    loading: () => (
-      <div
-        className="absolute inset-0 rounded-xl border-2 border-night-950 bg-night-900"
-        aria-hidden
-      />
-    ),
-  },
-);
+import { HERO_BACKGROUND_BLUR } from "@/lib/image-blur";
 
 type ImageProps = {
   src: string;
@@ -43,13 +32,16 @@ export const HeroHeading = (props: HeroHeadingProps) => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-night-900 px-[5%] pb-16 pt-14 text-fur-50 md:pb-20 md:pt-20 lg:pt-24">
+    <section className="relative overflow-hidden bg-night-900 px-4 pb-14 pt-12 text-fur-50 sm:px-[5%] sm:pb-16 sm:pt-14 md:pb-20 md:pt-20 lg:pt-24">
+      <div className="absolute inset-0 bg-night-900" aria-hidden />
       <Image
         src={backgroundImage.src}
         alt={backgroundImage.alt ?? ""}
         fill
         priority
         fetchPriority="high"
+        placeholder="blur"
+        blurDataURL={HERO_BACKGROUND_BLUR}
         sizes="100vw"
         quality={70}
         className="object-cover object-center"
@@ -63,26 +55,29 @@ export const HeroHeading = (props: HeroHeadingProps) => {
         className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_30%,#02164599,transparent_70%)] lg:bg-[radial-gradient(ellipse_55%_55%_at_28%_32%,#021645b3,transparent_70%)]"
         aria-hidden
       />
-      <HeroHeadingStars />
       <div className="container relative z-10">
-        <div className="relative mx-auto w-full max-w-xl px-4 md:px-6">
+        <div className="relative mx-auto w-full max-w-xl md:px-6">
           <div className="text-center lg:text-left">
-            <h1 className="mx-auto max-w-[691px] text-balance text-6xl font-bold leading-tight tracking-[-2px] [text-shadow:0_1px_0_#02164580,0_0_3px_#021645,0_2px_24px_#0216458c] md:text-8xl lg:mx-0">
+            <h1 className="mx-auto max-w-[691px] text-balance text-[2.625rem] font-bold leading-[1.05] tracking-[-1.5px] [text-shadow:0_1px_0_#02164580,0_0_3px_#021645,0_2px_24px_#0216458c] sm:text-6xl sm:tracking-[-2px] md:text-8xl lg:mx-0">
               {heading}
             </h1>
-            <p className="mx-auto mt-4 max-w-[532px] text-base tracking-[-0.5px] text-fur-50 [text-shadow:0_1px_0_#02164580,0_0_2px_#021645,0_1px_12px_#02164580] md:mt-5 md:text-lg lg:mx-0">
+            <p className="mx-auto mt-4 max-w-[532px] text-sm leading-relaxed tracking-[-0.5px] text-fur-50 [text-shadow:0_1px_0_#02164580,0_0_2px_#021645,0_1px_12px_#02164580] sm:text-base md:mt-5 md:text-lg lg:mx-0">
               {description}
             </p>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3 md:mt-6 md:gap-4 lg:justify-start">
+            <div className="mt-5 flex w-full flex-col gap-3 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
               {buttons.map((button, index) => (
-                <Button key={index} {...button} />
+                <Button
+                  key={index}
+                  className={buttonMobileFullWidthClass}
+                  {...button}
+                />
               ))}
             </div>
             <HeroSocialProof />
           </div>
 
-          <div className="relative mt-14 md:mt-16">
-            <div className="relative h-[26rem] sm:h-[30rem] lg:h-[35rem]">
+          <div className="relative mt-10 sm:mt-14 md:mt-16">
+            <div className="relative h-[21rem] sm:h-[30rem] lg:h-[35rem]">
               <HeroDashboardPreview />
               <HeroCharacter
                 src={characterImage.src}

@@ -14,6 +14,10 @@ import {
 export const ScreenActiveContext = createContext(false);
 export const useScreenActive = () => use(ScreenActiveContext);
 
+/** True when GSAP entrance animations should run (skipped on first paint). */
+export const ShouldAnimateEntranceContext = createContext(false);
+export const useShouldAnimateEntrance = () => use(ShouldAnimateEntranceContext);
+
 /** Core Web Vitals pass/needs-improvement/fail rating, shared across screens. */
 export type Rating = "good" | "ni" | "poor";
 

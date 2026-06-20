@@ -68,9 +68,6 @@ export default function RootLayout({
       lang="en"
       className={`${atkinsonHyperlegible.variable} ${nunitoSans.variable} h-full antialiased`}
     >
-      <head>
-        <link rel="preconnect" href="https://i.pravatar.cc" crossOrigin="" />
-      </head>
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );

@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 type Testimonial = {
   name: string;
   position: string;
@@ -20,23 +22,22 @@ export function HeroSocialProof({
   caption = "Trusted by 2,000+ engineering teams",
 }: HeroSocialProofProps) {
   return (
-    <div className="mt-6 flex flex-col items-center gap-3 md:mt-7 lg:flex-row lg:items-center lg:gap-4">
+    <div className="mt-6 flex w-full flex-col items-center gap-3 sm:mt-7 lg:flex-row lg:items-center lg:gap-4">
       <ul className="flex -space-x-3">
-        {testimonials.map((t) => (
+        {testimonials.map((t, index) => (
           <li key={t.name} className="group relative">
             <button
               type="button"
               className="block size-11 overflow-hidden rounded-full border-2 border-night-900 bg-night-700 ring-1 ring-night-600 transition-transform duration-150 hover:z-10 hover:-translate-y-0.5 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zap-400"
               aria-label={`Read testimonial from ${t.name}, ${t.position} at ${t.company}`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={t.avatar}
                 alt=""
                 width={44}
                 height={44}
                 className="size-full object-cover"
-                loading="lazy"
+                priority={index < 3}
               />
             </button>
 
@@ -49,8 +50,7 @@ export function HeroSocialProof({
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 <div className="mt-3 flex items-center gap-3 border-t border-night-100 pt-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={t.avatar}
                     alt=""
                     width={36}
@@ -84,7 +84,7 @@ export function HeroSocialProof({
           </span>
           <span className="text-sm font-semibold text-fur-50">{rating}</span>
         </div>
-        <p className="text-sm text-night-100 [text-shadow:0_1px_12px_rgba(2,22,69,0.35)]">
+        <p className="text-xs text-night-100 sm:text-sm [text-shadow:0_1px_12px_rgba(2,22,69,0.35)]">
           {caption}
         </p>
       </div>
@@ -97,7 +97,7 @@ const defaultTestimonials: Testimonial[] = [
     name: "Priya Nair",
     position: "Staff Frontend Engineer",
     company: "Linear",
-    avatar: "https://i.pravatar.cc/96?img=5",
+    avatar: "/avatars/priya.jpg",
     quote:
       "DebugBear caught an LCP regression in our checkout flow before it hit production. The synthetic alerts paid for themselves in the first week.",
   },
@@ -105,7 +105,7 @@ const defaultTestimonials: Testimonial[] = [
     name: "Marcus Chen",
     position: "Head of Performance",
     company: "Vercel",
-    avatar: "https://i.pravatar.cc/96?img=12",
+    avatar: "/avatars/marcus.jpg",
     quote:
       "Having lab tests and real-user metrics side by side means we stop arguing about anecdotes and start shipping measurable wins.",
   },
@@ -113,7 +113,7 @@ const defaultTestimonials: Testimonial[] = [
     name: "Sofia Almeida",
     position: "Engineering Manager",
     company: "Shopify",
-    avatar: "https://i.pravatar.cc/96?img=32",
+    avatar: "/avatars/sofia.jpg",
     quote:
       "The CrUX trends view is the first thing I open every morning. It's how my team keeps Core Web Vitals green across 40+ pages.",
   },
@@ -121,7 +121,7 @@ const defaultTestimonials: Testimonial[] = [
     name: "Daniel Okafor",
     position: "Senior SRE",
     company: "Datadog",
-    avatar: "https://i.pravatar.cc/96?img=15",
+    avatar: "/avatars/daniel.jpg",
     quote:
       "Setup took ten minutes and the regression alerts are genuinely actionable. It's become part of our release checklist.",
   },
@@ -129,7 +129,7 @@ const defaultTestimonials: Testimonial[] = [
     name: "Hannah Weiss",
     position: "Web Performance Lead",
     company: "Atlassian",
-    avatar: "https://i.pravatar.cc/96?img=45",
+    avatar: "/avatars/hannah.jpg",
     quote:
       "DebugBear gives us a shared source of truth for performance. Designers, devs, and PMs all look at the same dashboards now.",
   },

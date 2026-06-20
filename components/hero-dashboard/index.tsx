@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { IconType } from "react-icons";
-import { RxBarChart, RxDashboard, RxPerson } from "react-icons/rx";
-import { ScreenActiveContext } from "./chrome";
+import { RxBarChart } from "react-icons/rx";
+import { RxDashboard } from "react-icons/rx";
+import { RxPerson } from "react-icons/rx";
+import { ScreenActiveContext, ShouldAnimateEntranceContext } from "./chrome";
 import { LabDashboardScreen } from "./screens/lab-dashboard";
 import { PageSpeedScreen } from "./screens/page-speed";
 import { RumScreen } from "./screens/rum";
@@ -31,6 +33,18 @@ function prefersReducedMotion() {
 export function HeroDashboardPreview() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [mountedScreens, setMountedScreens] = useState(() => new Set([0]));
+  const hasLeftInitialScreen = useRef(false);
+
+  useEffect(() => {
+    if (active !== 0) hasLeftInitialScreen.current = true;
+    setMountedScreens((prev) => {
+      if (prev.has(active)) return prev;
+      const next = new Set(prev);
+      next.add(active);
+      return next;
+    });
+  }, [active]);
 
   // `active` is a dependency so a manual tab click restarts the dwell timer,
   // giving the chosen screen a full interval before auto-advancing.
@@ -64,14 +78,14 @@ export function HeroDashboardPreview() {
               role="tab"
               aria-selected={isActive}
               onClick={() => setActive(i)}
-              className={`relative flex items-center gap-1 overflow-hidden rounded-t-md px-2.5 py-1 text-[10px] font-medium transition-colors sm:text-[11px] ${
+              className={`relative flex items-center justify-center gap-1 overflow-hidden rounded-t-md px-3 py-1.5 text-[10px] font-medium transition-colors sm:justify-start sm:px-2.5 sm:py-1 sm:text-[11px] ${
                 isActive
                   ? "bg-fur-100 text-night-900"
                   : "text-night-300 hover:text-fur-50"
               }`}
             >
-              <Icon className="size-3 shrink-0" />
-              <span className="max-w-[5.5rem] truncate sm:max-w-none">
+              <Icon className="size-3.5 shrink-0 sm:size-3" />
+              <span className="sr-only sm:not-sr-only sm:inline">
                 {screen.label}
               </span>
               {isActive && !paused ? (
@@ -93,17 +107,23 @@ export function HeroDashboardPreview() {
         aria-label="DebugBear product dashboards: lab tests, page speed report, and real user monitoring"
       >
         {SCREENS.map((screen, i) => {
+          if (!mountedScreens.has(i)) return null;
           const Component = screen.Component;
+          const isActive = i === active;
+          const shouldAnimate =
+            isActive && (active !== 0 || hasLeftInitialScreen.current);
           return (
             <div
               key={screen.id}
               className={`absolute inset-0 transition-opacity duration-700 ${
-                i === active ? "opacity-100" : "pointer-events-none opacity-0"
+                isActive ? "opacity-100" : "pointer-events-none opacity-0"
               }`}
-              aria-hidden={i !== active}
+              aria-hidden={!isActive}
             >
-              <ScreenActiveContext.Provider value={i === active}>
-                <Component />
+              <ScreenActiveContext.Provider value={isActive}>
+                <ShouldAnimateEntranceContext.Provider value={shouldAnimate}>
+                  <Component />
+                </ShouldAnimateEntranceContext.Provider>
               </ScreenActiveContext.Provider>
             </div>
           );

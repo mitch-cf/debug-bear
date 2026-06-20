@@ -16,7 +16,7 @@ import {
   RxStopwatch,
 } from "react-icons/rx";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button, type ButtonConfig } from "@/components/ui/button";
+import { Button, buttonMobileFullWidthClass, type ButtonConfig } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 
 type ImageProps = {
@@ -184,9 +184,13 @@ export const SiteNavbar = (props: SiteNavbarProps) => {
                     </Link>
                   ),
                 )}
-                <div className="mt-6 flex flex-col gap-4">
+                <div className="mt-6 flex w-full flex-col gap-3">
                   {buttons.map((button, index) => (
-                    <Button key={index} {...button} />
+                    <Button
+                      key={index}
+                      className={buttonMobileFullWidthClass}
+                      {...button}
+                    />
                   ))}
                 </div>
               </div>

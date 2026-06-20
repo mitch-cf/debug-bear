@@ -22,7 +22,7 @@ import {
 } from "react-icons/rx";
 import { useReducedMotionGsap } from "@/hooks/use-reduced-motion-gsap";
 import { animateCountUp } from "../metrics";
-import { Screen, Sidebar, Toolbar, useScreenActive } from "../chrome";
+import { Screen, Sidebar, Toolbar, useScreenActive, useShouldAnimateEntrance } from "../chrome";
 import type { Rating, SideEntry } from "../chrome";
 
 const rumSidebar: SideEntry[][] = [
@@ -61,6 +61,7 @@ function WebVitalCard({ label, value, rating }: WebVital) {
   const markerLeft =
     rating === "good" ? "20%" : rating === "ni" ? "58%" : "85%";
   const isActive = useScreenActive();
+  const shouldAnimate = useShouldAnimateEntrance();
   const rootRef = useRef<HTMLDivElement>(null);
   const valueRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<HTMLSpanElement>(null);
@@ -81,8 +82,8 @@ function WebVitalCard({ label, value, rating }: WebVital) {
       );
     },
     {
-      active: isActive,
-      dependencies: [isActive, value, markerLeft],
+      active: isActive && shouldAnimate,
+      dependencies: [isActive, shouldAnimate, value, markerLeft],
       scope: rootRef,
       revertOnUpdate: true,
     },

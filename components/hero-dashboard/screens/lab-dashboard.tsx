@@ -25,6 +25,7 @@ import {
   Sidebar,
   Toolbar,
   useScreenActive,
+  useShouldAnimateEntrance,
   type Rating,
 } from "../chrome";
 
@@ -168,6 +169,7 @@ const GRID_COLS = "grid-cols-[1.7fr_repeat(5,1fr)]";
 
 export function LabDashboardScreen() {
   const isActive = useScreenActive();
+  const shouldAnimate = useShouldAnimateEntrance();
   const rootRef = useRef<HTMLDivElement>(null);
 
   useReducedMotionGsap(
@@ -182,8 +184,8 @@ export function LabDashboardScreen() {
       });
     },
     {
-      active: isActive,
-      dependencies: [isActive],
+      active: isActive && shouldAnimate,
+      dependencies: [isActive, shouldAnimate],
       scope: rootRef,
       revertOnUpdate: true,
     },

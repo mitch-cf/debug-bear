@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useReducedMotionGsap } from "@/hooks/use-reduced-motion-gsap";
+import { HERO_CHARACTER_BLUR } from "@/lib/image-blur";
 
 type HeroCharacterProps = {
   src: string;
@@ -44,6 +45,9 @@ export function HeroCharacter({ src, alt }: HeroCharacterProps) {
         alt={alt ?? ""}
         width={512}
         height={512}
+        priority
+        placeholder="blur"
+        blurDataURL={HERO_CHARACTER_BLUR}
         className="relative z-[1] h-auto w-full drop-shadow-[0_12px_32px_rgba(2,22,69,0.5)]"
         sizes="(max-width: 1280px) 22rem, 24rem"
       />
