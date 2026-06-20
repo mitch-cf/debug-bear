@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  html,
+  body {
+    @apply bg-night-900 text-fur-50;
+  }
+
   h1,
   h2,
   h3,
@@ -36,6 +41,53 @@
       transparent 100%
     );
   }
+
+  /* Staggered page-load entrance — CSS-only so it runs before hydration. */
+  @media (prefers-reduced-motion: no-preference) {
+    .enter-fade-up,
+    .enter-fade-scale-up,
+    .enter-fade-in-right {
+      animation-duration: 0.75s;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+      animation-fill-mode: both;
+    }
+
+    .enter-fade-up {
+      animation-name: enter-fade-up;
+    }
+
+    .enter-fade-scale-up {
+      animation-name: enter-fade-scale-up;
+    }
+
+    .enter-fade-in-right {
+      animation-name: enter-fade-in-right;
+    }
+
+    .enter-delay-1 {
+      animation-delay: 90ms;
+    }
+
+    .enter-delay-2 {
+      animation-delay: 180ms;
+    }
+
+    .enter-delay-3 {
+      animation-delay: 270ms;
+    }
+
+    .enter-delay-4 {
+      animation-delay: 360ms;
+    }
+
+    .enter-delay-5 {
+      animation-delay: 480ms;
+    }
+
+    .enter-delay-6 {
+      animation-delay: 600ms;
+    }
+  }
 }
 
 /* Timer progress bar for the auto-rotating hero dashboard tabs */
@@ -45,5 +97,38 @@
   }
   to {
     width: 100%;
+  }
+}
+
+@keyframes enter-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-fade-scale-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes enter-fade-in-right {
+  from {
+    opacity: 0;
+    transform: translate(18px, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
   }
 }

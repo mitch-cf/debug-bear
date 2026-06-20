@@ -58,13 +58,13 @@ export const HeroHeading = (props: HeroHeadingProps) => {
       <div className="container relative z-10">
         <div className="relative mx-auto w-full max-w-xl md:px-6">
           <div className="text-center lg:text-left">
-            <h1 className="mx-auto max-w-[691px] text-balance text-[2.625rem] font-bold leading-[1.05] tracking-[-1.5px] [text-shadow:0_1px_0_#02164580,0_0_3px_#021645,0_2px_24px_#0216458c] sm:text-6xl sm:tracking-[-2px] md:text-8xl lg:mx-0">
+            <h1 className="enter-fade-up enter-delay-1 mx-auto max-w-[691px] text-balance text-[2.625rem] font-bold leading-[1.05] tracking-[-1.5px] [text-shadow:0_1px_0_#02164580,0_0_3px_#021645,0_2px_24px_#0216458c] sm:text-6xl sm:tracking-[-2px] md:text-8xl lg:mx-0">
               {heading}
             </h1>
-            <p className="mx-auto mt-4 max-w-[532px] text-sm leading-relaxed tracking-[-0.5px] text-fur-50 [text-shadow:0_1px_0_#02164580,0_0_2px_#021645,0_1px_12px_#02164580] sm:text-base md:mt-5 md:text-lg lg:mx-0">
+            <p className="enter-fade-up enter-delay-2 mx-auto mt-4 max-w-[532px] text-sm leading-relaxed tracking-[-0.5px] text-fur-50 [text-shadow:0_1px_0_#02164580,0_0_2px_#021645,0_1px_12px_#02164580] sm:text-base md:mt-5 md:text-lg lg:mx-0">
               {description}
             </p>
-            <div className="mt-5 flex w-full flex-col gap-3 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
+            <div className="enter-fade-up enter-delay-3 mt-5 flex w-full flex-col gap-3 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
               {buttons.map((button, index) => (
                 <Button
                   key={index}
@@ -73,15 +73,20 @@ export const HeroHeading = (props: HeroHeadingProps) => {
                 />
               ))}
             </div>
-            <HeroSocialProof />
+            <div className="enter-fade-up enter-delay-4">
+              <HeroSocialProof />
+            </div>
           </div>
 
           <div className="relative mt-10 sm:mt-14 md:mt-16">
             <div className="relative h-[21rem] sm:h-[30rem] lg:h-[35rem]">
-              <HeroDashboardPreview />
+              <div className="enter-fade-scale-up enter-delay-5 absolute inset-0">
+                <HeroDashboardPreview />
+              </div>
               <HeroCharacter
                 src={characterImage.src}
                 alt={characterImage.alt}
+                className="enter-fade-in-right enter-delay-6"
               />
             </div>
           </div>
