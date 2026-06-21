@@ -54,7 +54,11 @@ export const HeroHeading = (props: HeroHeadingProps) => {
         />
       </div>
       <div
-        className="absolute inset-0 h-full min-h-full bg-gradient-to-b from-night-900/10 via-transparent to-night-900/55"
+        className="absolute inset-0 h-full min-h-full bg-night-900/40"
+        aria-hidden
+      />
+      <div
+        className="absolute inset-0 h-full min-h-full bg-gradient-to-b from-night-900/5 via-night-900/15 to-night-900/75"
         aria-hidden
       />
       <div
